@@ -1,10 +1,11 @@
-![image](https://github.com/user-attachments/assets/d7d88817-95e9-4600-bc90-976d9775dfb3)# PersonajeNavidenio2024
+# PersonajeNavidenio2024
 
-# Personaje2024
 ## Nombre del personaje
 Dr. Finkelstein
+
 ## Creador
 Carlos Samael Aguayo Santana
+
 ## Explicacion del funcionamiento
 El Dr. Finkelstein a partir de un sensor de movimiento cuando este dectecte alguno comenzara a moverse,
 ya sea su silla de ruedas o bamboz brazos con servomotores, ademas incluira una fotoresistencia la cual encendera leds 
@@ -25,6 +26,8 @@ temperatura y humedad el dotor portara una pantalla lcd donde se iran mostrando 
 |Resistencias|<img width="100" src="https://http2.mlstatic.com/D_NQ_NP_2X_851407-MLM75526946846_042024-F.webp"/>|15|70.00|
 |Pantalla lcd|<img width="100" src="https://http2.mlstatic.com/D_NQ_NP_2X_612633-MLU79321411721_092024-F.webp"/>|1|80.00|
 |Potenciometro|<img width="100" src="https://github.com/user-attachments/assets/9435eb0b-2d6f-4630-b495-4b5a0b620349"/>|1|80.00|
+|Protoboard|<img width="100" src="https://http2.mlstatic.com/D_NQ_NP_2X_971378-MLA79221064104_092024-F.webp"/>|1|50.00|
+
 
 
 
@@ -34,8 +37,8 @@ temperatura y humedad el dotor portara una pantalla lcd donde se iran mostrando 
 |--|--|
 |Thonny|4.1.6|
 |Arduino IDE|2.3.2|
-|Fritzing||
-|Node-RED||
+|Fritzing|1.0.3|
+|Node-RED|1.3|
 |ThinkerCAD||
 
 ## Dibujo del personaje

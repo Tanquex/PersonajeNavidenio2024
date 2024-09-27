@@ -42,7 +42,7 @@ temperatura y humedad el dotor portara una pantalla lcd donde se iran mostrando 
 |ThinkerCAD||
 
 ## Dibujo del personaje
-Imagen hecha a mano o con software
+https://drive.google.com/drive/folders/1DQrH7txzxJfYUBUzFHwpwmaHhG9SgiMj?usp=sharing 
 
 ## Enlaces de la simulación de wokwi
 Deben ser de 1 a 2 enlaces de wokwi

@@ -44,8 +44,8 @@ temperatura y humedad el dotor portara una pantalla lcd donde se iran mostrando 
 ## Dibujo del personaje
 https://drive.google.com/drive/folders/1DQrH7txzxJfYUBUzFHwpwmaHhG9SgiMj?usp=sharing 
 
-## Enlaces de la simulación de wokwi
-Deben ser de 1 a 2 enlaces de wokwi
+## Enlace de la simulación de wokwi
+https://wokwi.com/projects/410168743435040769
 
 ## Videos
 Enlace del vídeo en drive u cualquier otro repositorio donde yo como docente pueda evaluar con una duración máxima de 5 minutos.

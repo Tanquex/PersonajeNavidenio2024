@@ -1,0 +1,207 @@
+from machine import Pin, ADC,I2C,PWM,SoftI2C
+from time import sleep
+import time
+import math
+from ssd1306 import SSD1306_I2C
+from dht import DHT22
+from lcd_api import LcdApi
+from i2c_lcd import I2cLcd
+
+# Constantes por eso mayuscula
+GAMMA = 0.7
+RL10 = 50  # Resistance at 10 lux
+
+# Configure the LDR pin (ADC channel)
+ldr_pin = ADC(Pin(34))  # GPIO 34
+ldr_pin.atten(ADC.ATTN_11DB)  # Full-scale voltage 0-3.3V
+ldr_pin.width(ADC.WIDTH_12BIT)  # 12-bit resolution (0-4095)
+
+#leds
+#Control de leds y botones
+led1=Pin(14,Pin.OUT)
+led2=Pin(27,Pin.OUT)
+led3=Pin(25,Pin.OUT)
+bOn=Pin(33,Pin.IN, Pin.PULL_UP)
+bOff=Pin(12,Pin.IN, Pin.PULL_UP)
+btoggle=Pin(26,Pin.IN, Pin.PULL_UP)
+led_state=False
+#Definir funcion que apague y encienda
+def toggle(pin):
+    global led_state
+    led_state= not led_state
+    led3.value(led_state)
+
+#Definir funcion que encienda el led
+def on(pin):
+    led1.value(True)
+    led2.value(True)
+
+#Definir funcion que apague el led
+def off(pin):
+    led1.value(False)
+    led2.value(False)
+
+#Instruccion que se lanza despues de presionan el boton
+bOn.irq(trigger=Pin.IRQ_FALLING, handler=on)
+bOff.irq(trigger=Pin.IRQ_FALLING, handler=off)
+btoggle.irq(trigger=Pin.IRQ_FALLING, handler=toggle)
+
+###
+
+#Monitorización de Temperatura 
+#configurar la oled , primero la conexion i2c
+i2c=I2C(scl=Pin(22),sda=Pin(21))
+oled=SSD1306_I2C(128,64,i2c)
+
+#crear el obejto del sensor
+sensor=DHT22(Pin(32))
+
+#rgb
+pin_rojo = PWM(Pin(2))  # Cambia el número de pin según tu configuración
+pin_verde = PWM(Pin(0))
+pin_azul = PWM(Pin(19))
+
+# Configura la frecuencia de PWM (frecuencia estándar de 500 Hz)
+pin_rojo.freq(500)
+pin_verde.freq(500)
+pin_azul.freq(500)
+
+# Función para ajustar el color del LED RGB
+def set_color(rojo, verde, azul):
+    pin_rojo.duty(rojo)   # Valor entre 0 (apagado) y 1023 (máxima intensidad)
+    pin_verde.duty(verde)
+    pin_azul.duty(azul)
+
+
+
+###fotoresistencia
+ledluz=Pin(18,Pin.OUT)
+def calculate_lux(analog_value):
+    # Convert the analog value into voltage (assuming 12-bit ADC and 3.3V range)
+    voltage = analog_value / 4095.0 * 3.3
+    # Calculate the resistance of the LDR
+    resistance = 2000 * voltage / (1 - voltage / 3.3)
+    # Calculate lux value using the formula
+    lux = math.pow(RL10 * 1e3 * math.pow(10, GAMMA) / resistance, (1 / GAMMA))/1.808
+    return lux
+
+###servomotor
+# Configurar el pin del servo en el pin 15 temep
+servo_pin = PWM(Pin(16), freq=50)
+
+# Configurar el pn del servo en el pin 2 humedad
+servo_h = PWM(Pin(2), freq=50)
+
+
+
+###PAntalla lcd
+I2C_ADDR=0x27
+num_lines=2
+num_columnes=16
+#objeto para comunicar i2c 
+i2c=SoftI2C(scl=Pin(22),sda=Pin(21),freq=1000)
+#objeto para la lcd
+lcd=I2cLcd(i2c, I2C_ADDR,num_lines,num_columnes)
+
+
+
+
+# Función para mover el servo a un ángulo específico
+def move_servo(angle):
+    
+    min_duty = 26   # Corresponde a 0 grados 
+    max_duty = 127  # Corresponde a 180 grados 
+    
+    # Calcular el ciclo de trabajo según el ángulo deseado
+    duty = int(min_duty + (angle / 180) * (max_duty - min_duty))
+    servo_pin.duty(duty)
+    servo_h.duty(duty)
+#metodo para el segundo servo eb base ala humedad
+def move_servo_h(angle):
+    
+    min_duty = 26    
+    max_duty = 127   
+    
+    
+    duty = int(min_duty + (angle / 180) * (max_duty - min_duty))
+    servo_h.duty(duty)
+
+while True:
+    #leer valores del sensor
+    sensor.measure()
+    #asignar al sensor 
+    temp=sensor.temperature()
+    hum=sensor.humidity()
+
+
+    #cambiar rgb segun temp
+    if temp>30:
+        set_color(1023, 0, 0)  # Rojo
+        
+    else:
+        set_color(0, 1023, 0)  # Verde
+
+
+    # Read the analog value from the LDR
+    analog_value = ldr_pin.read()
+    # Calculate the lux value
+    lux = calculate_lux(analog_value)
+    print("Lux:", lux)
+
+     # Print lighting condition
+    if lux < 1000:
+        print("Oscuro")#rojo
+        ledluz.value(True)
+    elif lux < 10000:
+        print("Un poco oscuro")#amarillo
+        ledluz.value(True)
+    else:
+        print("Totalmente iluminado")#verde
+        ledluz.value(False)
+         #
+    time.sleep(1)
+    
+    ##servomotor
+    if temp>30:
+        move_servo(0)
+    else:
+        move_servo(90)
+    
+    ##pantalla oled
+    oled.text("La temperatura es",0,0,1)
+    oled.text("%3.1f"%temp,0,10,1)
+    oled.show()
+    
+    oled.text("La humedad es",0,20,1)
+    oled.text("%3.0f"%hum,0,30,1)
+    oled.show()
+    
+    if temp>50:
+        oled.text("Temp ALTA!!",0,40,1)
+        oled.show()
+    sleep(2)
+
+    oled.clear()
+
+    ##pantalla lcd
+    lcd.putstr("La temp es %3.1f C"%temp)
+    sleep(3)
+    lcd.clear()
+    lcd.putstr("La hum es  %3.0f %%"%hum)
+    sleep(3)
+    lcd.clear()
+    if temp>50:
+        lcd.putstr("La temp es Alta!!")
+        sleep(3)
+        lcd.clear()
+
+
+    
+        
+
+    
+    
+
+
+
+   

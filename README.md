@@ -48,7 +48,7 @@ https://drive.google.com/drive/folders/1DQrH7txzxJfYUBUzFHwpwmaHhG9SgiMj?usp=sha
 https://wokwi.com/projects/410168743435040769
 
 ## Videos
-Enlace del vídeo en drive u cualquier otro repositorio donde yo como docente pueda evaluar con una duración máxima de 5 minutos.
+https://drive.google.com/file/d/1bdvpysR1_7kOtmnfCWHRmx9TCRtG0hHk/view?usp=drive_link
 
 ## Capturas de Evaluaciones de Curso de C
 Capturas de pantalla de sus resultados de evaluaciones del curso de C.

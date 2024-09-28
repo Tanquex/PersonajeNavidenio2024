@@ -8,10 +8,10 @@ Carlos Samael Aguayo Santana
 
 ## Explicacion del funcionamiento
 El Dr. Finkelstein a partir de un sensor de movimiento cuando este dectecte alguno comenzara a moverse,
-ya sea su silla de ruedas o bamboz brazos con servomotores, ademas incluira una fotoresistencia la cual encendera leds 
-que estaran posicionado dentro de su cerebro dependiendo la cantidad de luz que exista o bien se le añadira un bototn a este led para
+ya sea su silla de ruedas o ambos brazos con servomotores, ademas incluira una fotoresistencia la cual encendera leds 
+que estaran posicionado dentro de su cerebro dependiendo la cantidad de luz que exista o bien se le añadira un boton a este led para
 que tambien lo haga encender, depues a partir de un sensor de 
-temperatura y humedad el dotor portara una pantalla lcd donde se iran mostrando estos valores.
+temperatura y humedad el doctor portara una pantalla lcd donde se iran mostrando estos valores.
 
 ## Materiales a utlizar
 |Material|Imagen|Cantidad|Costo|
@@ -51,4 +51,4 @@ https://wokwi.com/projects/410168743435040769
 https://drive.google.com/file/d/1bdvpysR1_7kOtmnfCWHRmx9TCRtG0hHk/view?usp=drive_link
 
 ## Capturas de Evaluaciones de Curso de C
-Capturas de pantalla de sus resultados de evaluaciones del curso de C.
+https://drive.google.com/drive/folders/11p1u9kHr3uVOoHa7IyRNC9NIrUVyHE0q?usp=sharing
